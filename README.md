@@ -55,6 +55,20 @@ A high-performance portfolio featuring a **cyberpunk HUD design**, reflecting ex
 - **Email**: [yuvraj202001@gmail.com](mailto:yuvraj202001@gmail.com)
 - **GitHub**: [@Yuvraj3905](https://github.com/Yuvraj3905)
 
+## 🚢 Deployment
+
+The project is configured for automatic deployment to **GitHub Pages** via GitHub Actions.
+
+- **Base Path**: `/My-Portfolio/`
+- **Workflow**: [deploy.yml](.github/workflows/deploy.yml)
+- **Automatic Triggers**: Every push to the `main` branch.
+
+To enable GitHub Pages:
+
+1. Push your changes to GitHub.
+2. Go to **Settings > Pages**.
+3. Under **Build and deployment > Source**, select **GitHub Actions**.
+
 ---
 
 © 2024 Yuvraj Singh // AI Systems Architect
