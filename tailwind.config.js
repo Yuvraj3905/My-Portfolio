@@ -1,18 +1,23 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
+export default {
+  content: ["./index.html", "./App.jsx", "./main.jsx"],
   theme: {
     extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      colors: {
+        cyber: {
+          dark: "#050505",
+          panel: "#1A1A1A",
+          neon: "#00F0FF",
+          danger: "#FF2A6D",
+        },
+        "cyber-neon": "#00F0FF",
+        "cyber-dark": "#050505",
+        "cyber-panel": "#111111",
+      },
+      fontFamily: {
+        mono: ['"JetBrains Mono"', "monospace"],
       },
     },
   },
   plugins: [],
-}
+};
