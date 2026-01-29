@@ -424,6 +424,55 @@ export default function App() {
           </div>
         </section>
 
+        {/* ACHIEVEMENTS SECTION */}
+        <section className="py-32 px-6 max-w-7xl mx-auto relative overflow-hidden">
+          <motion.div
+            style={{ y: land2Y }}
+            className="absolute inset-0 z-0 flex items-end translate-y-20"
+          >
+            <Landscape type="mountains" className="w-full h-full opacity-5" />
+          </motion.div>
+          <div className="relative z-10">
+            <div className="mb-16">
+              <h2 className="text-3xl md:text-5xl font-bold mb-4 uppercase">
+                HONORS & <span className="text-cyber-neon">ACHIEVEMENTS</span>
+              </h2>
+              <div className="h-1 w-20 bg-cyber-neon" />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <HUDCard
+                title="Winner - CodeStorm 2.0"
+                type="Team RouteMe"
+                icon={Trophy}
+                impact='WTF "Wow That’s Fantastic" Innovation Award'
+                tech={["AR/MR", "Immersive Tech", "OBLIS"]}
+                description="Led Team RouteMe to victory at CodeStorm 2.0 organized by KocharTech. Developed OBLIS, an AR and merged reality solution that pushed the boundaries of immersive technology."
+              />
+              <HUDCard
+                title="1st Runner-Up - CodeStorm Hackathon"
+                type="AI Smart Home Security"
+                icon={Trophy}
+                impact="95% Detection Accuracy"
+                tech={["AI", "IoT", "Computer Vision", "Real-time Alerts"]}
+                description="Created HomeSeeker, an AI-powered security system detecting fire, smoke, violence, and covered faces. Reduced emergency response time by 40% through instant authoritative notifications."
+              />
+              <HUDCard
+                title="Top 10 Finalist - All India Smart Hackathon"
+                type="Portfolio Website Track"
+                icon={Trophy}
+                impact="Innovation Award"
+                tech={[
+                  "Portfolio Generator",
+                  "Personal Branding",
+                  "Scalable Templates",
+                ]}
+                description="Secured a Top 10 position in the prestigious national hackathon. Presented an innovative portfolio generator solution designed to streamline personal branding through vibrant, customizable templates."
+              />
+            </div>
+          </div>
+        </section>
+
         {/* SERVICE HISTORY */}
         <section className="py-32 px-6 max-w-5xl mx-auto relative">
           <motion.div
