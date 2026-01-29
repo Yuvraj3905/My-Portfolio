@@ -20,10 +20,14 @@ import {
   Server,
   Layout,
   ExternalLink,
+  Home,
+  Monitor,
+  Command,
+  X,
 } from "lucide-react";
 
 // --- HELPERS ---
-const Typewriter = ({ text, delay = 0.05 }) => {
+const Typewriter = ({ text, delay = 0.05, className = "" }) => {
   const [displayed, setDisplayed] = useState("");
   useEffect(() => {
     let i = 0;
@@ -34,10 +38,185 @@ const Typewriter = ({ text, delay = 0.05 }) => {
     }, delay * 1000);
     return () => clearInterval(interval);
   }, [text, delay]);
-  return <span>{displayed}</span>;
+  return <span className={className}>{displayed}</span>;
 };
 
 // --- COMPONENTS ---
+
+const NavHUD = ({ activeSection }) => {
+  const navItems = [
+    { id: "hero", icon: Home, label: "INIT" },
+    { id: "skills", icon: Zap, label: "STACK" },
+    { id: "projects", icon: Globe, label: "DEPLOY" },
+    { id: "achievements", icon: Trophy, label: "AWARDS" },
+    { id: "experience", icon: Server, label: "LOG" },
+    { id: "contact", icon: Mail, label: "LINK" },
+  ];
+
+  return (
+    <div className="fixed right-6 top-1/2 -translate-y-1/2 z-50 hidden md:flex flex-col gap-6">
+      {navItems.map((item) => (
+        <a
+          key={item.id}
+          href={`#${item.id}`}
+          className={`group relative p-3 border rounded-sm transition-all duration-300 ${
+            activeSection === item.id
+              ? "bg-cyber-neon border-cyber-neon text-black shadow-[0_0_15px_#00F0FF]"
+              : "border-white/10 text-white/40 hover:border-white/40 hover:text-white"
+          }`}
+        >
+          <item.icon size={18} />
+          <span className="absolute right-full mr-4 px-2 py-1 bg-black/80 border border-white/10 text-[10px] font-mono tracking-widest text-cyber-neon opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none uppercase">
+            {item.label}
+          </span>
+          {activeSection === item.id && (
+            <div className="absolute -left-1 top-0 bottom-0 w-0.5 bg-black" />
+          )}
+        </a>
+      ))}
+    </div>
+  );
+};
+
+const TerminalSystem = ({ isOpen, onClose }) => {
+  const [input, setInput] = useState("");
+  const [history, setHistory] = useState([
+    { type: "system", content: "Agentic OS v2.0.4 loaded." },
+    { type: "system", content: 'Type "help" for available commands.' },
+  ]);
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [history]);
+
+  const handleCommand = (e) => {
+    if (e.key === "Enter") {
+      const cmd = input.trim().toLowerCase();
+      const newHistory = [...history, { type: "user", content: `> ${input}` }];
+
+      if (cmd === "help") {
+        newHistory.push({
+          type: "system",
+          content: "Available: help, ls, whoami, clear, exit, goto [section]",
+        });
+      } else if (cmd === "ls") {
+        newHistory.push({
+          type: "system",
+          content:
+            "Sections: hero, skills, projects, achievements, experience, contact",
+        });
+      } else if (cmd === "whoami") {
+        newHistory.push({
+          type: "system",
+          content:
+            "Yuvraj Singh: AI & Full Stack Engineer. Specializing in Agentic Workflows.",
+        });
+      } else if (cmd === "clear") {
+        setHistory([]);
+        setInput("");
+        return;
+      } else if (cmd === "exit") {
+        onClose();
+        setInput("");
+        return;
+      } else if (cmd.startsWith("goto ")) {
+        const target = cmd.split(" ")[1];
+        const element = document.getElementById(target);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+          newHistory.push({
+            type: "success",
+            content: `Navigating to ${target}...`,
+          });
+        } else {
+          newHistory.push({
+            type: "error",
+            content: `Section "${target}" not found.`,
+          });
+        }
+      } else if (cmd !== "") {
+        newHistory.push({
+          type: "error",
+          content: `Command not found: ${cmd}`,
+        });
+      }
+
+      setHistory(newHistory);
+      setInput("");
+    }
+  };
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.9 }}
+          className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-10 bg-black/80 backdrop-blur-md"
+        >
+          <div className="w-full max-w-4xl h-[60vh] bg-cyber-dark border border-cyber-neon/30 flex flex-col shadow-[0_0_50px_rgba(0,240,255,0.1)] overflow-hidden">
+            <div className="flex justify-between items-center px-4 py-2 bg-cyber-neon/10 border-b border-cyber-neon/20">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-cyber-neon animate-pulse" />
+                <span className="font-mono text-[10px] text-cyber-neon tracking-widest uppercase">
+                  System Terminal // User@Yuvraj-Portfolio
+                </span>
+              </div>
+              <button
+                onClick={onClose}
+                className="text-gray-500 hover:text-white transition-colors"
+              >
+                <X size={16} />
+              </button>
+            </div>
+
+            <div
+              ref={scrollRef}
+              className="flex-1 p-6 font-mono text-sm overflow-y-auto custom-scrollbar space-y-2"
+            >
+              {history.map((log, i) => (
+                <div
+                  key={i}
+                  className={`
+                  ${log.type === "system" ? "text-gray-400" : ""}
+                  ${log.type === "user" ? "text-cyber-neon" : ""}
+                  ${log.type === "error" ? "text-red-500" : ""}
+                  ${log.type === "success" ? "text-green-400" : ""}
+                `}
+                >
+                  {log.content}
+                </div>
+              ))}
+              <div className="flex gap-2 text-cyber-neon">
+                <span>{">"}</span>
+                <input
+                  autoFocus
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={handleCommand}
+                  className="bg-transparent border-none outline-none flex-1 text-cyber-neon"
+                />
+              </div>
+            </div>
+
+            <div className="px-4 py-1 bg-cyber-neon/5 border-t border-cyber-neon/10 flex justify-between">
+              <span className="text-[8px] text-gray-600 font-mono uppercase">
+                Status: Ready
+              </span>
+              <span className="text-[8px] text-gray-600 font-mono uppercase tracking-widest">
+                Type "exit" to close
+              </span>
+            </div>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
 
 const Loader = ({ onComplete }) => {
   return (
@@ -187,7 +366,45 @@ const Landscape = ({
 
 export default function App() {
   const [loading, setLoading] = useState(true);
+  const [terminalOpen, setTerminalOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("hero");
   const containerRef = useRef(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+        e.preventDefault();
+        setTerminalOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  useEffect(() => {
+    const sections = [
+      "hero",
+      "skills",
+      "projects",
+      "achievements",
+      "experience",
+      "contact",
+    ];
+    const options = { threshold: 0.5 };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) setActiveSection(entry.target.id);
+      });
+    }, options);
+
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   const { scrollYProgress } = useScroll({ target: containerRef });
 
   const heroScale = useTransform(scrollYProgress, [0, 0.1], [1, 20]);
@@ -204,6 +421,26 @@ export default function App() {
         {loading && <Loader onComplete={() => setLoading(false)} />}
       </AnimatePresence>
 
+      <NavHUD activeSection={activeSection} />
+      <TerminalSystem
+        isOpen={terminalOpen}
+        onClose={() => setTerminalOpen(false)}
+      />
+
+      {/* TERMINAL TRIGGER BUTTON */}
+      <button
+        onClick={() => setTerminalOpen(true)}
+        className="fixed top-6 right-6 z-[60] p-3 bg-cyber-dark/80 backdrop-blur-md border border-cyber-neon/30 text-cyber-neon rounded transition-all group flex items-center gap-2 hover:bg-cyber-neon hover:text-black shadow-[0_0_15px_rgba(0,240,255,0.1)]"
+      >
+        <Command
+          size={16}
+          className="group-hover:rotate-12 transition-transform"
+        />
+        <span className="text-[10px] font-mono tracking-widest uppercase hidden md:inline">
+          System Terminal [Ctrl+K]
+        </span>
+      </button>
+
       {/* BACKGROUND EFFECTS */}
       <div className="fixed inset-0 z-0 pointer-events-none opacity-20">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,#00F0FF11,transparent_70%)]" />
@@ -212,7 +449,7 @@ export default function App() {
 
       <main ref={containerRef} className="relative z-10 w-full">
         {/* HERO SECTION */}
-        <section className="h-[200vh] relative">
+        <section id="hero" className="h-[200vh] relative">
           <motion.div
             style={{ y: land1Y }}
             className="absolute inset-0 z-0 flex items-end"
@@ -302,7 +539,10 @@ export default function App() {
         </section>
 
         {/* SKILLS SECTION */}
-        <section className="py-32 px-6 max-w-7xl mx-auto relative content-none">
+        <section
+          id="skills"
+          className="py-32 px-6 max-w-7xl mx-auto relative content-none"
+        >
           <motion.div
             style={{ y: land1Y }}
             className="absolute inset-x-0 bottom-0 z-0 flex items-end translate-y-20"
@@ -356,7 +596,10 @@ export default function App() {
         </section>
 
         {/* PROJECTS SECTION */}
-        <section className="py-32 px-6 bg-white/[0.02] border-y border-white/5 relative overflow-hidden">
+        <section
+          id="projects"
+          className="py-32 px-6 bg-white/[0.02] border-y border-white/5 relative overflow-hidden"
+        >
           <motion.div
             style={{ y: land2Y }}
             className="absolute inset-0 z-0 flex items-end"
@@ -425,7 +668,10 @@ export default function App() {
         </section>
 
         {/* ACHIEVEMENTS SECTION */}
-        <section className="py-32 px-6 max-w-7xl mx-auto relative overflow-hidden">
+        <section
+          id="achievements"
+          className="py-32 px-6 max-w-7xl mx-auto relative overflow-hidden"
+        >
           <motion.div
             style={{ y: land2Y }}
             className="absolute inset-0 z-0 flex items-end translate-y-20"
@@ -474,7 +720,10 @@ export default function App() {
         </section>
 
         {/* SERVICE HISTORY */}
-        <section className="py-32 px-6 max-w-5xl mx-auto relative">
+        <section
+          id="experience"
+          className="py-32 px-6 max-w-5xl mx-auto relative"
+        >
           <motion.div
             style={{ y: land3Y }}
             className="absolute inset-0 z-0 flex items-end"
@@ -536,7 +785,10 @@ export default function App() {
         </section>
 
         {/* CTAs / REACH OUT */}
-        <section className="py-32 px-6 bg-[radial-gradient(circle_at_center,rgba(0,240,255,0.05),transparent)]">
+        <section
+          id="contact"
+          className="py-32 px-6 bg-[radial-gradient(circle_at_center,rgba(0,240,255,0.05),transparent)]"
+        >
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-4xl md:text-6xl font-black mb-8">
               BUILD THE <span className="text-cyber-neon">FUTURE</span>
