@@ -529,11 +529,35 @@ export default function App() {
               </div>
             </motion.div>
 
-            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-[10px] font-mono text-white/20 flex flex-col items-center gap-2">
-              <span className="uppercase tracking-[0.5em]">
-                Initiate sequence
-              </span>
-              <ChevronDown className="animate-bounce" size={16} />
+            <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 z-30">
+              <motion.div
+                animate={{ y: [0, 10, 0] }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="w-6 h-10 border-2 border-cyber-neon/20 rounded-full flex justify-center p-1.5"
+              >
+                <motion.div
+                  animate={{ y: [0, 12, 0], opacity: [1, 0, 1] }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                  className="w-1 h-2 bg-cyber-neon rounded-full"
+                />
+              </motion.div>
+              <div className="flex flex-col items-center gap-1">
+                <span className="text-[9px] font-mono text-cyber-neon uppercase tracking-[0.5em] animate-pulse">
+                  Scroll to Initialize
+                </span>
+                <ChevronDown
+                  className="text-cyber-neon/50 animate-bounce"
+                  size={14}
+                />
+              </div>
             </div>
           </div>
         </section>
