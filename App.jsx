@@ -100,7 +100,8 @@ const TerminalSystem = ({ isOpen, onClose }) => {
       if (cmd === "help") {
         newHistory.push({
           type: "system",
-          content: "Available: help, ls, whoami, clear, exit, goto [section]",
+          content:
+            "Available: help, ls, whoami, clear, exit, goto [section], resume",
         });
       } else if (cmd === "ls") {
         newHistory.push({
@@ -114,6 +115,12 @@ const TerminalSystem = ({ isOpen, onClose }) => {
           content:
             "Yuvraj Singh: AI & Full Stack Engineer. Specializing in Agentic Workflows.",
         });
+      } else if (cmd === "resume") {
+        newHistory.push({
+          type: "success",
+          content: "Initiating resume download sequence...",
+        });
+        window.dispatchEvent(new CustomEvent("trigger-resume"));
       } else if (cmd === "clear") {
         setHistory([]);
         setInput("");
@@ -215,6 +222,322 @@ const TerminalSystem = ({ isOpen, onClose }) => {
         </motion.div>
       )}
     </AnimatePresence>
+  );
+};
+
+const CustomCursor = () => {
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [hovered, setHovered] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const onMouseMove = (e) => {
+      setPosition({ x: e.clientX, y: e.clientY });
+      if (!isVisible) setIsVisible(true);
+    };
+    const onMouseEnter = () => setIsVisible(true);
+    const onMouseLeave = () => setIsVisible(false);
+
+    window.addEventListener("mousemove", onMouseMove);
+    document.body.addEventListener("mouseenter", onMouseEnter);
+    document.body.addEventListener("mouseleave", onMouseLeave);
+
+    const handleHover = (e) => {
+      const target = e.target;
+      if (
+        target.tagName === "BUTTON" ||
+        target.tagName === "A" ||
+        target.closest("button") ||
+        target.closest("a") ||
+        target.classList.contains("cursor-pointer")
+      ) {
+        setHovered(true);
+      } else {
+        setHovered(false);
+      }
+    };
+
+    window.addEventListener("mouseover", handleHover);
+
+    return () => {
+      window.removeEventListener("mousemove", onMouseMove);
+      document.body.removeEventListener("mouseenter", onMouseEnter);
+      document.body.removeEventListener("mouseleave", onMouseLeave);
+      window.removeEventListener("mouseover", handleHover);
+    };
+  }, [isVisible]);
+
+  if (
+    typeof window !== "undefined" &&
+    window.matchMedia("(pointer: coarse)").matches
+  )
+    return null;
+
+  return (
+    <>
+      <motion.div
+        className="fixed top-0 left-0 w-12 h-12 border border-cyber-neon/30 rounded-full pointer-events-none z-[9999] hidden md:flex items-center justify-center shadow-[0_0_15px_rgba(0,240,255,0.1)]"
+        animate={{
+          x: position.x - 24,
+          y: position.y - 24,
+          scale: hovered ? 1.4 : 1,
+          rotate: hovered ? 90 : 0,
+          opacity: isVisible ? 1 : 0,
+          borderColor: hovered
+            ? "rgba(0, 240, 255, 0.8)"
+            : "rgba(0, 240, 255, 0.3)",
+        }}
+        transition={{ type: "spring", damping: 25, stiffness: 300, mass: 0.5 }}
+      >
+        <div className="w-full h-[1px] bg-cyber-neon/20 absolute rotate-45" />
+        <div className="w-full h-[1px] bg-cyber-neon/20 absolute -rotate-45" />
+      </motion.div>
+
+      <motion.div
+        className="fixed top-0 left-0 w-2 h-2 bg-cyber-neon clip-path-tactical pointer-events-none z-[9999] hidden md:block shadow-[0_0_10px_#00F0FF]"
+        animate={{
+          x: position.x - 4,
+          y: position.y - 4,
+          opacity: isVisible ? 1 : 0,
+          rotate: hovered ? 45 : 0,
+        }}
+        transition={{ type: "spring", damping: 40, stiffness: 800, mass: 0.1 }}
+      />
+    </>
+  );
+};
+
+const ResumeModal = ({ isOpen, onClose }) => {
+  const [progress, setProgress] = useState(0);
+  const [status, setStatus] = useState("ESTABLISHING ENCRYPTED LINK...");
+  const [dataStream, setDataStream] = useState([]);
+
+  useEffect(() => {
+    if (isOpen) {
+      const generateData = () => {
+        const chars = "0123456789ABCDEF";
+        let str = "";
+        for (let i = 0; i < 20; i++) {
+          str += chars[Math.floor(Math.random() * chars.length)];
+        }
+        return str;
+      };
+
+      const interval = setInterval(() => {
+        setDataStream((prev) => [generateData(), ...prev.slice(0, 15)]);
+      }, 100);
+      return () => clearInterval(interval);
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (isOpen) {
+      setProgress(0);
+      const statuses = [
+        "ESTABLISHING ENCRYPTED LINK...",
+        "DECRYPTING BIOMETRIC DATA...",
+        "SYNCHRONIZING WITH CLOUD CORE...",
+        "PULLING ENCRYPTED ARCHIVE...",
+        "CHECKSUM VERIFICATION...",
+        "FINALIZING DOWNLOAD...",
+      ];
+
+      let currentStatusIndex = 0;
+      const interval = setInterval(() => {
+        setProgress((prev) => {
+          if (prev >= 100) {
+            clearInterval(interval);
+            return 100;
+          }
+
+          const newProgress = prev + Math.random() * 10;
+          const statusIndex = Math.floor((newProgress / 100) * statuses.length);
+          if (
+            statusIndex > currentStatusIndex &&
+            statusIndex < statuses.length
+          ) {
+            currentStatusIndex = statusIndex;
+            setStatus(statuses[statusIndex]);
+          }
+
+          return newProgress > 100 ? 100 : newProgress;
+        });
+      }, 150);
+
+      return () => clearInterval(interval);
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (progress === 100) {
+      const timer = setTimeout(() => {
+        onClose();
+        const link = document.createElement("a");
+        link.href =
+          "https://drive.google.com/file/d/11ei3_9F9jvFGptLj0oTDsrsUE3cIhzIC/view?usp=sharing";
+        link.download = "Yuvraj_Singh_Resume.pdf";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }, 800);
+      return () => clearTimeout(timer);
+    }
+  }, [progress, onClose]);
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[250] flex items-center justify-center bg-black/95 backdrop-blur-2xl overflow-hidden"
+        >
+          {/* DATA STREAM BACKGROUND */}
+          <div className="absolute inset-0 flex justify-between px-4 opacity-10 pointer-events-none">
+            <div className="font-mono text-[10px] text-cyber-neon leading-none flex flex-col">
+              {dataStream.map((d, i) => (
+                <div key={i}>{d}</div>
+              ))}
+            </div>
+            <div className="font-mono text-[10px] text-cyber-neon leading-none flex flex-col items-end">
+              {dataStream.map((d, i) => (
+                <div key={i}>{d}</div>
+              ))}
+            </div>
+          </div>
+
+          <div className="w-full max-w-lg p-1 mr-4 ml-4 bg-gradient-to-br from-cyber-neon/30 to-transparent clip-path-tactical">
+            <div className="bg-cyber-dark p-8 md:p-12 relative clip-path-tactical">
+              <div className="scanline" />
+
+              <div className="flex items-center gap-4 mb-10">
+                <div className="p-3 bg-cyber-neon/10 rounded-sm border border-cyber-neon/20">
+                  <Database
+                    className="text-cyber-neon animate-pulse"
+                    size={24}
+                  />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-black text-white tracking-tighter uppercase italic">
+                    Data <span className="text-cyber-neon">Retrieval</span>
+                  </h2>
+                  <p className="text-[10px] font-mono text-gray-500 uppercase tracking-widest mt-1">
+                    System Protocol v4.0.2
+                  </p>
+                </div>
+              </div>
+
+              <div className="space-y-8">
+                <div className="flex justify-between font-mono text-[11px] text-cyber-neon uppercase tracking-widest">
+                  <motion.span
+                    animate={{ opacity: [1, 0.5, 1] }}
+                    transition={{ duration: 1, repeat: Infinity }}
+                  >
+                    {status}
+                  </motion.span>
+                  <span className="text-white font-black">
+                    {Math.floor(progress)}%
+                  </span>
+                </div>
+
+                <div className="relative h-2 w-full bg-white/5 overflow-hidden">
+                  <motion.div
+                    className="h-full bg-cyber-neon shadow-[0_0_20px_#00F0FF]"
+                    initial={{ width: "0%" }}
+                    animate={{ width: `${progress}%` }}
+                  />
+                  <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_0%,rgba(255,255,255,0.1)_50%,transparent_100%)] w-20 animate-[scanline_2s_infinite]" />
+                </div>
+
+                <div className="flex gap-1.5 h-1.5">
+                  {Array.from({ length: 24 }).map((_, i) => (
+                    <motion.div
+                      key={i}
+                      className="flex-1"
+                      animate={{
+                        backgroundColor:
+                          progress > (i / 24) * 100
+                            ? "#00F0FF"
+                            : "rgba(255, 255, 255, 0.05)",
+                        boxShadow:
+                          progress > (i / 24) * 100
+                            ? "0 0 10px #00F0FF"
+                            : "none",
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-12 pt-6 border-t border-white/5 flex justify-between items-center text-[9px] font-mono text-gray-500 uppercase tracking-[0.3em]">
+                <div className="flex items-center gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-cyber-neon animate-ping" />
+                  AUTHENTICATED_DOWNLOAD
+                </div>
+                <span>NODE_ID: 87x-ALPHA</span>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
+
+const CyberButton = ({
+  children,
+  onClick,
+  href,
+  target,
+  rel,
+  variant = "primary",
+  className = "",
+}) => {
+  const isPrimary = variant === "primary";
+  const isSecondary = variant === "secondary";
+  const isTertiary = variant === "tertiary";
+
+  const content = (
+    <div className="relative overflow-hidden group">
+      <div
+        className={`
+        relative px-8 py-4 font-black uppercase tracking-[0.2em] text-sm transition-all duration-300
+        clip-path-tactical border-2
+        ${isPrimary ? "bg-cyber-neon border-cyber-neon text-black hover:bg-white hover:border-white" : ""}
+        ${isSecondary ? "bg-transparent border-cyber-neon text-cyber-neon hover:bg-cyber-neon/10" : ""}
+        ${isTertiary ? "bg-transparent border-white/20 text-white/50 hover:border-cyber-neon hover:text-cyber-neon" : ""}
+        ${className}
+      `}
+      >
+        <span className="relative z-10 block group-hover:animate-glitch">
+          {children}
+        </span>
+
+        {/* CORNER ACCENTS */}
+        <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-white/30" />
+        <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-white/30" />
+
+        {/* HOVER GLOW */}
+        {isSecondary && (
+          <div className="absolute inset-0 bg-cyber-neon/0 group-hover:bg-cyber-neon/5 transition-colors" />
+        )}
+      </div>
+    </div>
+  );
+
+  if (href) {
+    return (
+      <a href={href} target={target} rel={rel} className="block no-underline">
+        {content}
+      </a>
+    );
+  }
+
+  return (
+    <button onClick={onClick} className="block">
+      {content}
+    </button>
   );
 };
 
@@ -367,8 +690,18 @@ const Landscape = ({
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [terminalOpen, setTerminalOpen] = useState(false);
+  const [resumeOpen, setResumeOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
   const containerRef = useRef(null);
+
+  useEffect(() => {
+    const handleTriggerResume = () => {
+      setResumeOpen(true);
+    };
+    window.addEventListener("trigger-resume", handleTriggerResume);
+    return () =>
+      window.removeEventListener("trigger-resume", handleTriggerResume);
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -426,6 +759,8 @@ export default function App() {
         isOpen={terminalOpen}
         onClose={() => setTerminalOpen(false)}
       />
+      <ResumeModal isOpen={resumeOpen} onClose={() => setResumeOpen(false)} />
+      <CustomCursor />
 
       {/* TERMINAL TRIGGER BUTTON */}
       <button
@@ -821,21 +1156,28 @@ export default function App() {
               Currently open for high-impact AI/Full-Stack roles. Let's build
               agentic systems that scale.
             </p>
-            <div className="flex flex-wrap justify-center gap-6">
-              <a
+            <div className="flex flex-wrap justify-center gap-6 mt-8">
+              <CyberButton
+                onClick={() => setResumeOpen(true)}
+                variant="primary"
+              >
+                Download Resume
+              </CyberButton>
+              <CyberButton
                 href="mailto:yuvraj202001@gmail.com"
-                className="px-8 py-4 bg-cyber-neon text-black font-bold uppercase tracking-widest hover:bg-white transition-all transform hover:-translate-y-1"
+                variant="secondary"
               >
                 Establish Link
-              </a>
-              <a
+              </CyberButton>
+              <CyberButton
                 href="https://linkedin.com/in/Yuvraj3905"
                 target="_blank"
                 rel="noreferrer"
-                className="px-8 py-4 border border-cyber-neon text-cyber-neon font-bold uppercase tracking-widest hover:bg-cyber-neon/10 transition-all transform hover:-translate-y-1"
+                variant="tertiary"
+                className="flex items-center gap-3"
               >
-                LinkedIn Matrix
-              </a>
+                <Linkedin size={18} /> Matrix
+              </CyberButton>
             </div>
           </div>
         </section>
