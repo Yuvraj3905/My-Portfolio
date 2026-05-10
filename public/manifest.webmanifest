@@ -1,0 +1,18 @@
+{
+  "name": "Yuvraj Singh | AI & Full Stack Engineer",
+  "short_name": "Yuvraj.Portfolio",
+  "description": "Cyberpunk-themed portfolio of an AI & Full Stack Engineer specializing in agentic workflows.",
+  "start_url": "/My-Portfolio/",
+  "scope": "/My-Portfolio/",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#050505",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,17 +1,28 @@
 import { AnimatePresence } from "framer-motion";
-import { lazy, Suspense, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { CustomCursor } from "@/components/CustomCursor";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { HUDControls } from "@/components/HUDControls";
 import { Loader } from "@/components/Loader";
+import { MatrixRain } from "@/components/MatrixRain";
 import { NavHUD } from "@/components/NavHUD";
+import { PWAUpdater } from "@/components/PWAUpdater";
 import { ResumeModal } from "@/components/ResumeModal";
+import { ShaderBackground } from "@/components/ShaderBackground";
 import { TerminalSystem } from "@/components/TerminalSystem";
 import { TerminalTrigger } from "@/components/TerminalTrigger";
+import { VisitorCounter } from "@/components/VisitorCounter";
 import { Hero } from "@/components/sections/Hero";
 import { ResumeProvider } from "@/contexts/ResumeContext";
+import { SettingsProvider } from "@/contexts/SettingsContext";
 import { TerminalProvider } from "@/contexts/TerminalContext";
+import { useSettings } from "@/contexts/useSettings";
 import { useActiveSection } from "@/hooks/useActiveSection";
+import { useHashRoute } from "@/hooks/useHashRoute";
+import { useKonami } from "@/hooks/useKonami";
 import { useTerminalShortcut } from "@/hooks/useTerminalShortcut";
+import { sfx } from "@/lib/sfx";
+import { haptic } from "@/lib/haptics";
 
 const Skills = lazy(() =>
   import("@/components/sections/Skills").then((m) => ({ default: m.Skills })),
@@ -37,6 +48,9 @@ const Contact = lazy(() =>
 const Footer = lazy(() =>
   import("@/components/sections/Footer").then((m) => ({ default: m.Footer })),
 );
+const ResumePage = lazy(() =>
+  import("@/routes/Resume").then((m) => ({ default: m.ResumePage })),
+);
 
 const SectionFallback = () => (
   <div
@@ -48,14 +62,31 @@ const SectionFallback = () => (
   </div>
 );
 
-const AppShell = () => {
+const PortfolioMain = () => {
   const [loading, setLoading] = useState(true);
   const containerRef = useRef<HTMLElement>(null);
   const activeSection = useActiveSection();
+  const { setMatrix, matrixMode } = useSettings();
   useTerminalShortcut();
+
+  useKonami(() => {
+    setMatrix(true);
+    sfx.play("glitch");
+    haptic("double");
+  });
+
+  useEffect(() => {
+    if (!loading) sfx.play("success");
+  }, [loading]);
+
+  useEffect(() => {
+    sfx.play("glitch");
+    haptic("light");
+  }, [activeSection]);
 
   return (
     <div className="bg-cyber-dark text-white min-h-screen overflow-x-hidden selection:bg-cyber-neon selection:text-black">
+      <ShaderBackground />
       <AnimatePresence>
         {loading && <Loader onComplete={() => setLoading(false)} />}
       </AnimatePresence>
@@ -65,14 +96,9 @@ const AppShell = () => {
       <ResumeModal />
       <CustomCursor />
       <TerminalTrigger />
-
-      <div
-        aria-hidden="true"
-        className="fixed inset-0 z-0 pointer-events-none opacity-20"
-      >
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,#00F0FF11,transparent_70%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:40px_40px]" />
-      </div>
+      <VisitorCounter />
+      <HUDControls />
+      {matrixMode && <MatrixRain />}
 
       <main ref={containerRef} className="relative z-10 w-full">
         <Hero containerRef={containerRef} />
@@ -93,14 +119,29 @@ const AppShell = () => {
   );
 };
 
+const Router = () => {
+  const hash = useHashRoute();
+  if (hash === "#/resume" || hash === "#resume") {
+    return (
+      <Suspense fallback={<SectionFallback />}>
+        <ResumePage />
+      </Suspense>
+    );
+  }
+  return <PortfolioMain />;
+};
+
 export default function App() {
   return (
     <ErrorBoundary>
-      <ResumeProvider>
-        <TerminalProvider>
-          <AppShell />
-        </TerminalProvider>
-      </ResumeProvider>
+      <SettingsProvider>
+        <ResumeProvider>
+          <TerminalProvider>
+            <Router />
+            <PWAUpdater />
+          </TerminalProvider>
+        </ResumeProvider>
+      </SettingsProvider>
     </ErrorBoundary>
   );
 }

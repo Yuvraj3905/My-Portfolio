@@ -26,6 +26,9 @@ export const Contact = () => {
           <CyberButton onClick={openResume} variant="primary">
             Download Resume
           </CyberButton>
+          <CyberButton href="#/resume" variant="secondary">
+            View Online Resume
+          </CyberButton>
           <CyberButton href={`mailto:${site.links.email}`} variant="secondary">
             Establish Link
           </CyberButton>
