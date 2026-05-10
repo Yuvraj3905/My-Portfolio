@@ -29,19 +29,19 @@ float noise(vec2 p) {
 void main() {
   vec2 uv = (gl_FragCoord.xy - 0.5 * u_res) / min(u_res.x, u_res.y);
 
-  float gridX = abs(fract(uv.x * 18.0) - 0.5);
-  float gridY = abs(fract(uv.y * 18.0) - 0.5);
-  float grid = smoothstep(0.48, 0.5, max(gridX, gridY)) * 0.18;
+  float gridX = abs(fract(uv.x * 24.0) - 0.5);
+  float gridY = abs(fract(uv.y * 24.0) - 0.5);
+  float grid = smoothstep(0.485, 0.5, max(gridX, gridY)) * 0.06;
 
-  float scan = 0.5 + 0.5 * sin(uv.y * u_res.y * 1.5 - u_time * 6.0);
-  scan = pow(scan, 8.0) * 0.05;
+  float scan = 0.5 + 0.5 * sin(uv.y * u_res.y * 1.5 - u_time * 4.0);
+  scan = pow(scan, 12.0) * 0.015;
 
-  float n = noise(uv * 4.0 + u_time * 0.05);
-  float pulse = smoothstep(0.55, 0.95, n) * 0.25;
+  float n = noise(uv * 3.0 + u_time * 0.03);
+  float pulse = smoothstep(0.7, 0.98, n) * 0.07;
 
-  float vignette = 1.0 - smoothstep(0.5, 1.4, length(uv));
+  float vignette = 1.0 - smoothstep(0.4, 1.2, length(uv));
 
-  vec3 col = u_color * (grid + scan + pulse) * vignette;
+  vec3 col = u_color * (grid + scan + pulse) * vignette * 0.6;
   gl_FragColor = vec4(col, 1.0);
 }
 `;
@@ -144,7 +144,7 @@ export const ShaderBackground = () => {
     <canvas
       ref={ref}
       aria-hidden="true"
-      className="fixed inset-0 w-full h-full z-0 pointer-events-none opacity-60"
+      className="fixed inset-0 w-full h-full z-0 pointer-events-none opacity-25"
     />
   );
 };

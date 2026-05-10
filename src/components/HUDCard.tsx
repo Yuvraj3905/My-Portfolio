@@ -42,7 +42,7 @@ export const HUDCard = ({
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="relative p-6 bg-cyber-panel/40 border border-white/10 backdrop-blur-xl group hover:border-cyber-neon/50 transition-all duration-500 overflow-hidden"
+      className="relative p-6 bg-cyber-panel/70 border border-white/10 backdrop-blur-xl group hover:border-cyber-neon/50 transition-all duration-500 overflow-hidden"
     >
       <ShareButton anchor={anchor} label={`Copy link to ${title}`} />
 

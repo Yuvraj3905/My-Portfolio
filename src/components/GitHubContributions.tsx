@@ -67,7 +67,7 @@ export const GitHubContributions = () => {
   };
 
   return (
-    <div className="p-6 bg-black/40 border border-white/5 rounded-lg">
+    <div className="p-6 bg-black/60 border border-white/10 rounded-lg backdrop-blur-md">
       <div className="flex items-center justify-between mb-4">
         <h4 className="font-mono text-sm font-bold tracking-widest uppercase text-cyber-neon">
           Live Activity

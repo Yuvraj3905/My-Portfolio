@@ -15,7 +15,7 @@ export const Activity = ({ containerRef }: ActivityProps) => {
   return (
     <section
       id="activity"
-      className="py-32 px-6 bg-white/[0.02] border-y border-white/5 relative overflow-hidden"
+      className="py-32 px-6 bg-cyber-dark/60 border-y border-white/5 relative overflow-hidden"
       aria-label="Live development activity"
     >
       <motion.div
@@ -75,7 +75,7 @@ interface StatTileProps {
 }
 
 const StatTile = ({ label, value, pulse }: StatTileProps) => (
-  <div className="p-4 bg-black/40 border border-white/10 rounded-lg">
+  <div className="p-4 bg-black/60 border border-white/10 rounded-lg backdrop-blur-md">
     <p className="font-mono text-[9px] text-gray-400 uppercase tracking-widest mb-2">
       {label}
     </p>

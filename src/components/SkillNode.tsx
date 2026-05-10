@@ -15,7 +15,7 @@ export const SkillNode = ({ title, skills, icon }: SkillNodeProps) => {
       initial={{ opacity: 0, scale: 0.95 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true }}
-      className="p-6 bg-black/40 border border-white/5 rounded-lg hover:border-white/20 transition-all"
+      className="p-6 bg-black/60 border border-white/10 rounded-lg backdrop-blur-md hover:border-white/30 transition-all"
     >
       <div className="flex items-center gap-3 mb-4 text-cyber-neon">
         <Icon size={20} aria-hidden="true" />

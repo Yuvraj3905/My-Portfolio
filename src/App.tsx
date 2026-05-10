@@ -92,6 +92,10 @@ const PortfolioMain = () => {
   return (
     <div className="bg-cyber-dark text-white min-h-screen overflow-x-hidden selection:bg-cyber-neon selection:text-black">
       <ShaderBackground />
+      <div
+        aria-hidden="true"
+        className="fixed inset-0 z-[1] pointer-events-none bg-gradient-to-b from-cyber-dark/40 via-cyber-dark/70 to-cyber-dark/85"
+      />
       <AnimatePresence>
         {loading && <Loader onComplete={() => setLoading(false)} />}
       </AnimatePresence>
