@@ -18,10 +18,39 @@ body {
   font-family: "Inter", system-ui, sans-serif;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body.cursor-hidden {
+  cursor: none;
+}
 @media (pointer: fine) {
-  body {
+  body.cursor-hidden #hero,
+  body.cursor-hidden #hero * {
     cursor: none;
   }
+}
+
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--cyber-neon);
+  outline-offset: 2px;
 }
 
 @keyframes scan {
@@ -142,7 +171,6 @@ body {
   );
 }
 
-/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 5px;
 }

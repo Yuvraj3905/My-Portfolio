@@ -1,0 +1,46 @@
+import {
+  Bot,
+  ChevronDown,
+  Code2,
+  Command,
+  Cpu,
+  Database,
+  ExternalLink,
+  Github,
+  Globe,
+  Home,
+  Layout,
+  Linkedin,
+  Mail,
+  Monitor,
+  Server,
+  Terminal,
+  Trophy,
+  X,
+  Zap,
+} from "lucide-react";
+import type { IconComponent, IconName } from "@/types";
+
+export const iconMap: Record<IconName, IconComponent> = {
+  Bot,
+  ChevronDown,
+  Code2,
+  Command,
+  Cpu,
+  Database,
+  ExternalLink,
+  Github,
+  Globe,
+  Home,
+  Layout,
+  Linkedin,
+  Mail,
+  Monitor,
+  Server,
+  Terminal,
+  Trophy,
+  X,
+  Zap,
+};
+
+export const getIcon = (name: IconName): IconComponent => iconMap[name];

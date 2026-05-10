@@ -1,0 +1,16 @@
+[
+  {
+    "role": "Junior Engineer",
+    "period": "JULY 2024 - PRESENT",
+    "current": true,
+    "description": "Driving core engineering for PhygitalMax. Specialized in low-latency systems and AI integrations for e-commerce at scale. Developed custom Chrome extension bridges for RPA bots and real-time engagement modules.",
+    "highlights": ["PhygitalMax"]
+  },
+  {
+    "role": "IT Intern",
+    "period": "JAN 2024 - JUNE 2024",
+    "current": false,
+    "description": "Refactored legacy API endpoints for scalability, achieving 99.9% uptime. Engineered core modules for cross-platform live video apps using Flutter and Node.js.",
+    "highlights": ["99.9% uptime"]
+  }
+]

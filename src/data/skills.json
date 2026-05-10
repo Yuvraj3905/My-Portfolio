@@ -1,0 +1,38 @@
+[
+  {
+    "title": "AI & LLM Stack",
+    "icon": "Cpu",
+    "skills": [
+      "LangGraph",
+      "LangChain",
+      "OpenAI GPT-4o",
+      "RAG",
+      "Vector DBs",
+      "Computer Vision"
+    ]
+  },
+  {
+    "title": "Core Engineering",
+    "icon": "Server",
+    "skills": [
+      "Next.js",
+      "Python (Expert)",
+      "FastAPI",
+      "Node.js",
+      "WebSockets",
+      "Docker",
+      "Playwright"
+    ]
+  },
+  {
+    "title": "Agentic Concepts",
+    "icon": "Zap",
+    "skills": [
+      "Agentic Workflows",
+      "Prompt Engineering",
+      "Microservices",
+      "System Design",
+      "Event-Driven Architecture"
+    ]
+  }
+]

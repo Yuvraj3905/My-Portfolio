@@ -35,3 +35,7 @@ yarn-error.log*
 next-env.d.ts
 
 /dist
+
+# AI assistant local notes (do not push)
+CLAUDE.md
+.claude/

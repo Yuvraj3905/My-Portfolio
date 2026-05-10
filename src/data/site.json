@@ -1,0 +1,20 @@
+{
+  "name": "Yuvraj Singh",
+  "role": "AI & Full Stack Engineer",
+  "bio": "> High-performance engineer with 2+ years experience in agentic workflows, LLMs, and real-time systems. Proven track record of reducing latency by 300ms and improving engagement by 35%.",
+  "resumeUrl": "https://drive.google.com/file/d/11ei3_9F9jvFGptLj0oTDsrsUE3cIhzIC/view?usp=sharing",
+  "resumeFileName": "Yuvraj_Singh_Resume.pdf",
+  "links": {
+    "github": "https://github.com/Yuvraj3905",
+    "linkedin": "https://linkedin.com/in/Yuvraj3905",
+    "email": "yuvraj202001@gmail.com"
+  },
+  "nav": [
+    { "id": "hero", "icon": "Home", "label": "INIT" },
+    { "id": "skills", "icon": "Zap", "label": "STACK" },
+    { "id": "projects", "icon": "Globe", "label": "DEPLOY" },
+    { "id": "achievements", "icon": "Trophy", "label": "AWARDS" },
+    { "id": "experience", "icon": "Server", "label": "LOG" },
+    { "id": "contact", "icon": "Mail", "label": "LINK" }
+  ]
+}

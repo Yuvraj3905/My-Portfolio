@@ -1,0 +1,50 @@
+[
+  {
+    "title": "Self-Healing RPA Engine",
+    "type": "Agentic AI Scraper",
+    "icon": "Bot",
+    "impact": "85% Success Rate",
+    "tech": ["Python", "LangGraph", "GPT-4o Vision", "Playwright"],
+    "description": "Built an autonomous web scraper that identifies broken selectors via multi-modal feedback loops and rewrites its execution code in real-time."
+  },
+  {
+    "title": "PhygitalMax Backend",
+    "type": "Real-time Synchronization",
+    "icon": "Globe",
+    "impact": "-300ms Latency",
+    "tech": ["Node.js", "WebSockets", "Redis"],
+    "description": "Architected a multi-camera synchronization protocol for livestream commerce, supporting 10k+ concurrent users with sub-second latency."
+  },
+  {
+    "title": "Talk-to-Data SaaS",
+    "type": "B2B AI Analytics",
+    "icon": "Database",
+    "impact": "Secure RAG",
+    "tech": ["Next.js", "FastAPI", "LangChain SQL Agent"],
+    "description": "Natural language SQL query engine with PII sanitization, allowing non-technical managers to derive insights from raw databases."
+  },
+  {
+    "title": "HomeSeeker",
+    "type": "IoT AI Security",
+    "icon": "Trophy",
+    "impact": "95% Accuracy",
+    "tech": ["Python", "TensorFlow", "OpenCV", "IoT"],
+    "description": "1st Runner-Up @ CodeStorm. AI security device detecting fire, violence, and covered faces in real-time on low-power hardware."
+  },
+  {
+    "title": "Annotation Engine",
+    "type": "Live Engagement",
+    "icon": "Zap",
+    "impact": "+35% Engagement",
+    "tech": ["Next.js", "Real-time DB"],
+    "description": "Real-time collaborative annotation layer for live video sessions, significantly boosting user interaction during e-commerce events."
+  },
+  {
+    "title": "Chronosense",
+    "type": "Cross-Platform Tool",
+    "icon": "ChevronDown",
+    "impact": "32% Efficiency",
+    "tech": ["Flutter", "Node.js", "Firebase"],
+    "description": "Cross-platform time-tracking engine with real-time sync and actionable productivity analytics for diverse workflows."
+  }
+]

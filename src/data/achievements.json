@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Winner - CodeStorm 2.0",
+    "type": "Team RouteMe",
+    "icon": "Trophy",
+    "impact": "WTF \"Wow That's Fantastic\" Innovation Award",
+    "tech": ["AR/MR", "Immersive Tech", "OBLIS"],
+    "description": "Led Team RouteMe to victory at CodeStorm 2.0 organized by KocharTech. Developed OBLIS, an AR and merged reality solution that pushed the boundaries of immersive technology."
+  },
+  {
+    "title": "1st Runner-Up - CodeStorm Hackathon",
+    "type": "AI Smart Home Security",
+    "icon": "Trophy",
+    "impact": "95% Detection Accuracy",
+    "tech": ["AI", "IoT", "Computer Vision", "Real-time Alerts"],
+    "description": "Created HomeSeeker, an AI-powered security system detecting fire, smoke, violence, and covered faces. Reduced emergency response time by 40% through instant authoritative notifications."
+  },
+  {
+    "title": "Top 10 Finalist - All India Smart Hackathon",
+    "type": "Portfolio Website Track",
+    "icon": "Trophy",
+    "impact": "Innovation Award",
+    "tech": ["Portfolio Generator", "Personal Branding", "Scalable Templates"],
+    "description": "Secured a Top 10 position in the prestigious national hackathon. Presented an innovative portfolio generator solution designed to streamline personal branding through vibrant, customizable templates."
+  }
+]

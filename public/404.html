@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Yuvraj Singh | Redirecting...</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <style>
+      body {
+        margin: 0;
+        background: #050505;
+        color: #00f0ff;
+        font-family: "JetBrains Mono", monospace;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        text-align: center;
+      }
+      h1 {
+        font-size: 1rem;
+        letter-spacing: 0.4em;
+        text-transform: uppercase;
+      }
+    </style>
+    <script>
+      (function () {
+        var basePath = "/My-Portfolio/";
+        var path =
+          window.location.pathname + window.location.search + window.location.hash;
+        sessionStorage.redirect = window.location.origin + path;
+        window.location.replace(window.location.origin + basePath);
+      })();
+    </script>
+  </head>
+  <body>
+    <h1>Re-routing through agentic gateway...</h1>
+  </body>
+</html>
