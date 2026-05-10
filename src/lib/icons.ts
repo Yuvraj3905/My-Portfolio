@@ -1,4 +1,5 @@
 import {
+  Activity,
   Bot,
   ChevronDown,
   Code2,
@@ -22,6 +23,7 @@ import {
 import type { IconComponent, IconName } from "@/types";
 
 export const iconMap: Record<IconName, IconComponent> = {
+  Activity,
   Bot,
   ChevronDown,
   Code2,

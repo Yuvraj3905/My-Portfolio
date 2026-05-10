@@ -27,6 +27,11 @@ import { haptic } from "@/lib/haptics";
 const Skills = lazy(() =>
   import("@/components/sections/Skills").then((m) => ({ default: m.Skills })),
 );
+const Activity = lazy(() =>
+  import("@/components/sections/Activity").then((m) => ({
+    default: m.Activity,
+  })),
+);
 const Projects = lazy(() =>
   import("@/components/sections/Projects").then((m) => ({
     default: m.Projects,
@@ -105,6 +110,7 @@ const PortfolioMain = () => {
 
         <Suspense fallback={<SectionFallback />}>
           <Skills containerRef={containerRef} />
+          <Activity containerRef={containerRef} />
           <Projects containerRef={containerRef} />
           <Achievements containerRef={containerRef} />
           <Experience containerRef={containerRef} />

@@ -1,7 +1,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import type { RefObject } from "react";
 import skillsData from "@/data/skills.json";
-import { GitHubContributions } from "@/components/GitHubContributions";
 import { Landscape } from "@/components/Landscape";
 import { SkillNode } from "@/components/SkillNode";
 import type { SkillGroup } from "@/types";
@@ -35,7 +34,7 @@ export const Skills = ({ containerRef }: SkillsProps) => {
         </h2>
         <div className="h-1 w-20 bg-cyber-neon" aria-hidden="true" />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {skills.map((group) => (
           <SkillNode
             key={group.title}
@@ -44,7 +43,6 @@ export const Skills = ({ containerRef }: SkillsProps) => {
             skills={group.skills}
           />
         ))}
-        <GitHubContributions />
       </div>
     </section>
   );
