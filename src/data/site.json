@@ -12,6 +12,7 @@
   "nav": [
     { "id": "hero", "icon": "Home", "label": "INIT" },
     { "id": "skills", "icon": "Zap", "label": "STACK" },
+    { "id": "activity", "icon": "Activity", "label": "PULSE" },
     { "id": "projects", "icon": "Globe", "label": "DEPLOY" },
     { "id": "achievements", "icon": "Trophy", "label": "AWARDS" },
     { "id": "experience", "icon": "Server", "label": "LOG" },

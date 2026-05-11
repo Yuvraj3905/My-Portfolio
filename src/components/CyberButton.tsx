@@ -1,4 +1,6 @@
 import type { ReactNode } from "react";
+import { sfx } from "@/lib/sfx";
+import { haptic } from "@/lib/haptics";
 
 type Variant = "primary" | "secondary" | "tertiary";
 
@@ -35,18 +37,35 @@ export const CyberButton = (props: CyberButtonProps) => {
   const { children, variant = "primary", className = "" } = props;
   const isSecondary = variant === "secondary";
 
+  const playInteract = () => {
+    sfx.play("beep");
+    haptic("medium");
+  };
+
   const content = (
-    <div className="relative overflow-hidden group">
+    <div
+      className="relative overflow-hidden group"
+      onMouseEnter={() => sfx.play("tick")}
+    >
       <div
         className={`relative px-8 py-4 font-black uppercase tracking-[0.2em] text-sm transition-all duration-300 clip-path-tactical border-2 ${variantClasses[variant]} ${className}`}
       >
         <span className="relative z-10 block group-hover:animate-glitch motion-reduce:group-hover:animate-none">
           {children}
         </span>
-        <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-white/30" />
-        <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-white/30" />
+        <div
+          aria-hidden="true"
+          className="absolute top-0 left-0 w-2 h-2 border-t border-l border-white/30"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-white/30"
+        />
         {isSecondary && (
-          <div className="absolute inset-0 bg-cyber-neon/0 group-hover:bg-cyber-neon/5 transition-colors" />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-cyber-neon/0 group-hover:bg-cyber-neon/5 transition-colors"
+          />
         )}
       </div>
     </div>
@@ -58,6 +77,7 @@ export const CyberButton = (props: CyberButtonProps) => {
         href={props.href}
         target={props.target}
         rel={props.rel}
+        onClick={playInteract}
         className="block no-underline focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyber-neon"
       >
         {content}
@@ -68,7 +88,10 @@ export const CyberButton = (props: CyberButtonProps) => {
   return (
     <button
       type="button"
-      onClick={"onClick" in props ? props.onClick : undefined}
+      onClick={() => {
+        playInteract();
+        if ("onClick" in props && props.onClick) props.onClick();
+      }}
       className="block focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyber-neon"
     >
       {content}

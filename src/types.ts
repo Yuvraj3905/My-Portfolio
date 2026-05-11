@@ -19,7 +19,8 @@ export type IconName =
   | "Command"
   | "X"
   | "Layout"
-  | "ExternalLink";
+  | "ExternalLink"
+  | "Activity";
 
 export interface NavItem {
   id: SectionId;
@@ -30,6 +31,7 @@ export interface NavItem {
 export type SectionId =
   | "hero"
   | "skills"
+  | "activity"
   | "projects"
   | "achievements"
   | "experience"

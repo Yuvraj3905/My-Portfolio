@@ -9,6 +9,16 @@
   --cyber-danger: #ff2a6d;
 }
 
+body[data-theme="amber"] {
+  --cyber-neon: #ffb347;
+  --cyber-danger: #ff5b5b;
+}
+
+body[data-theme="matrix"] {
+  --cyber-neon: #00ff85;
+  --cyber-danger: #ff4d8b;
+}
+
 body {
   margin: 0;
   background-color: var(--cyber-dark);
@@ -43,6 +53,53 @@ body.cursor-hidden {
   body.cursor-hidden #hero,
   body.cursor-hidden #hero * {
     cursor: none;
+  }
+}
+
+body.crt-mode {
+  filter: contrast(1.05) saturate(1.1);
+}
+body.crt-mode::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.18) 0px,
+      rgba(0, 0, 0, 0.18) 1px,
+      transparent 1px,
+      transparent 3px
+    ),
+    radial-gradient(
+      ellipse at center,
+      transparent 50%,
+      rgba(0, 0, 0, 0.45) 100%
+    );
+  mix-blend-mode: multiply;
+}
+body.crt-mode::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 998;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 0, 60, 0.04),
+    transparent 30%,
+    transparent 70%,
+    rgba(0, 200, 255, 0.04)
+  );
+  mix-blend-mode: screen;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.crt-mode::before,
+  body.crt-mode::after {
+    display: none;
   }
 }
 
@@ -129,6 +186,33 @@ button:focus-visible,
   animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
 }
 
+@keyframes glitch-once {
+  0% {
+    transform: translate(0);
+    opacity: 0;
+  }
+  20% {
+    transform: translate(-3px, 1px);
+    opacity: 0.8;
+  }
+  40% {
+    transform: translate(2px, -2px);
+    opacity: 1;
+  }
+  60% {
+    transform: translate(-1px, 2px);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate(0);
+    opacity: 1;
+  }
+}
+
+.glitch-in {
+  animation: glitch-once 0.45s steps(5, end) both;
+}
+
 @keyframes scanline {
   0% {
     top: -10%;
@@ -197,4 +281,21 @@ button:focus-visible,
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 240, 255, 0.5);
+}
+
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  body * {
+    color: black !important;
+    text-shadow: none !important;
+  }
+  .no-print,
+  nav,
+  footer,
+  canvas {
+    display: none !important;
+  }
 }

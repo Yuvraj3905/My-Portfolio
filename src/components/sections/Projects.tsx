@@ -18,7 +18,7 @@ export const Projects = ({ containerRef }: ProjectsProps) => {
   return (
     <section
       id="projects"
-      className="py-32 px-6 bg-white/[0.02] border-y border-white/5 relative overflow-hidden"
+      className="py-32 px-6 bg-cyber-dark/60 border-y border-white/5 relative overflow-hidden"
       aria-label="Featured projects"
     >
       <motion.div
