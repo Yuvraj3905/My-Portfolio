@@ -1,10 +1,17 @@
 [
   {
-    "role": "Junior Engineer",
-    "period": "JULY 2024 - PRESENT",
+    "role": "Software Development Engineer II",
+    "period": "JUL 2026 - PRESENT",
     "current": true,
-    "description": "Driving core engineering for PhygitalMax. Specialized in low-latency systems and AI integrations for e-commerce at scale. Developed custom Chrome extension bridges for RPA bots and real-time engagement modules.",
-    "highlights": ["PhygitalMax"]
+    "description": "Building a configurable multi-tenant conversational AI framework (TypeScript, Mastra) where one JSON config defines a bot's persona, models, RAG knowledge base, HTTP/MCP tools, flows and handoff. Built Auto QA, an 11-stage BullMQ pipeline that scores recorded sales calls with Claude: 69 calls in 10.2 minutes for $3.60, backed by 360+ tests.",
+    "highlights": ["Mastra", "Auto QA", "360+ tests"]
+  },
+  {
+    "role": "Software Development Engineer I",
+    "period": "JUL 2024 - JUN 2026",
+    "current": false,
+    "description": "Built OBLIS, an AR + Computer Vision (OpenCV, GPT-4o Vision) solution for field agents that cut repeat visits 45% and handle time 35% for 30L+ annual savings. Engineered a WebSocket multi-camera sync protocol for PhygitalMax scaling to 10k+ concurrent users under 300ms. Bridged RPA bots to knowledge bases via Chrome extensions.",
+    "highlights": ["OBLIS", "PhygitalMax", "10k+ concurrent users"]
   },
   {
     "role": "IT Intern",

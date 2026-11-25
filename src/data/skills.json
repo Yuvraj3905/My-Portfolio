@@ -5,9 +5,13 @@
     "skills": [
       "LangGraph",
       "LangChain",
+      "Mastra",
+      "MCP",
+      "Claude API",
       "OpenAI GPT-4o",
+      "Ollama",
       "RAG",
-      "Vector DBs",
+      "pgvector / Pinecone",
       "Computer Vision"
     ]
   },
@@ -15,12 +19,17 @@
     "title": "Core Engineering",
     "icon": "Server",
     "skills": [
-      "Next.js",
-      "Python (Expert)",
+      "Python",
+      "TypeScript",
       "FastAPI",
       "Node.js",
+      "Next.js",
+      "PostgreSQL",
+      "Redis",
+      "BullMQ",
       "WebSockets",
       "Docker",
+      "AWS Lambda",
       "Playwright"
     ]
   },
@@ -29,8 +38,10 @@
     "icon": "Zap",
     "skills": [
       "Agentic Workflows",
+      "Tool Use / Function Calling",
       "Prompt Engineering",
-      "Microservices",
+      "Semantic Search",
+      "Multi-tenant Systems",
       "System Design",
       "Event-Driven Architecture"
     ]

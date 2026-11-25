@@ -1,19 +1,27 @@
 [
   {
     "title": "Self-Healing RPA Engine",
-    "type": "Agentic AI Scraper",
+    "type": "Agentic AI",
     "icon": "Bot",
     "impact": "85% Success Rate",
     "tech": ["Python", "LangGraph", "GPT-4o Vision", "Playwright"],
-    "description": "Built an autonomous web scraper that identifies broken selectors via multi-modal feedback loops and rewrites its execution code in real-time."
+    "description": "Autonomous web agent that uses Computer Vision to detect broken UI selectors and rewrites its code through a Plan-Execute-Heal loop with LLM tool use. Zero manual maintenance on highly dynamic sites."
+  },
+  {
+    "title": "Project Aura",
+    "type": "Self-Hosted RAG Agent",
+    "icon": "Database",
+    "impact": "$0 LLM API Cost",
+    "tech": ["FastAPI", "pgvector", "Redis", "Ollama", "Rasa"],
+    "description": "Self-hosted RAG sales engineer with hybrid lexical+vector retrieval (RRF/MMR), anti-hallucination guardrails and two-tier Redis + pgvector semantic caching on local Ollama inference. 81 unit tests + 5 E2E regression scripts."
   },
   {
     "title": "PhygitalMax Backend",
     "type": "Real-time Synchronization",
     "icon": "Globe",
-    "impact": "-300ms Latency",
+    "impact": "<300ms Latency",
     "tech": ["Node.js", "WebSockets", "Redis"],
-    "description": "Architected a multi-camera synchronization protocol for livestream commerce, supporting 10k+ concurrent users with sub-second latency."
+    "description": "Architected a WebSocket multi-camera synchronization protocol for livestream commerce, supporting 10k+ concurrent users at under 300ms latency."
   },
   {
     "title": "Talk-to-Data SaaS",
